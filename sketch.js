@@ -16,7 +16,7 @@ function preload(){
   diamondsImg = loadImage("diamonds.png");
   jwelleryImg = loadImage("jwell.png");
   swordImg = loadImage("sword.png");
-  endImg =loadAnimation("gameOver.png");
+  endImg=loadImage("gameOver.png")
 }
 
 
@@ -34,8 +34,9 @@ boy = createSprite(70,580,20,20);
 boy.addAnimation("SahilRunning",boyImg);
 boy.scale=0.08;
 
-gameOver = createSprite(300,100);
+gameOver = createSprite(200,300);
 gameOver.addImage(endImg);
+gameOver.scale=0.7;
   
   
 cashG=new Group();
@@ -53,6 +54,8 @@ function draw() {
   
   edges= createEdgeSprites();
   boy.collide(edges);
+
+  gameOver.visible=false;
   
   //code to reset the background
   if(path.y > 400 ){
@@ -78,17 +81,22 @@ function draw() {
     }
 
     
-    if(swordGroup.isTouching(boy)){
+    else if(swordGroup.isTouching(boy)){
     gameState=END;
+    gameOver.visible=true;
     boy.changeAnimation("SahilRunning",endImg);
     boy.x=200;
     boy.y=300;
+    boy.destroy();
     cashG.destroyEach();
-    cashG.setvelocityYEach(0);
     diamondsG.destroyEach();
-    diamondsG.setvelocityYEach(0);
     jwelleryG.destroyEach();
-    jwelleryG.setvelocityYEach(0);   
+    swordGroup.destroyEach();
+
+    cashG.setVelocityYEach(0);
+    diamondsG.setVelocityYEach(0);
+    jwelleryG.setVelocityYEach(0);   
+    swordGroup.setVelocityYEach(0);
     }
   
   drawSprites();
